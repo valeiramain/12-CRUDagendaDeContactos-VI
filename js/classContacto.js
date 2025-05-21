@@ -16,14 +16,81 @@ export default class Contacto {
         this.#notas = notas;
     }
 
-    // Getter
-    get getNombre() {
-        return this.#nombre;
+    // Getters
+
+    get id() {
+
+        return this.#id;
+
     }
 
-    // Setter
-    set setNombre(nuevoNombre) {
+
+
+    get nombre() {
+
+        return this.#nombre;
+
+    }
+
+
+
+    get apellido() {
+
+        
+        return this.#apellido;
+    }
+
+    get telefono() {
+        return this.#telefono;
+    }
+
+    get email() {
+        return this.#email;
+    }
+
+    get imagen() {
+        return this.#imagen;
+    }
+
+    get notas() {
+        return this.#notas;
+    }
+
+    // Setters
+
+    set nombre(nuevoNombre) {
         this.#nombre = nuevoNombre;
     }
 
+    set apellido(nuevoApellido) {
+        this.#apellido = nuevoApellido;
+    }
+
+    set telefono(nuevoTelefono) {
+        this.#telefono = nuevoTelefono;
+    }
+
+    set email(nuevoEmail) {
+        this.#email = nuevoEmail;
+    }
+
+    set imagen(nuevaImagen) {
+        this.#imagen = nuevaImagen;
+    }
+
+    set notas(nuevasNotas) {
+        this.#notas = nuevasNotas;
+    }
+    //metodo para stringify
+    toJSON() {
+        return {
+            id: this.#id,
+            nombre: this.#nombre,
+            apellido: this.#apellido,
+            telefono: this.#telefono,
+            email: this.#telefono,
+            imagen: this.#imagen,
+            notas: this.notas
+        }
+    }
 }

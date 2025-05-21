@@ -19,10 +19,27 @@ function crearContacto() {
     //3- almacenar el objeto en la agenda
     agenda.push(nuevoContacto)
     console.log(agenda)
+
+    //4-guardar en local storage
+    guardarEnLocalStorage()
+
+    //5- limpiar formulario
+    limpiarFormulario()
 }
 
-//el usuario completa el form y debo crear un objeto contacto
+function limpiarFormulario(){
+    formularioCrearContacto.reset()
+    // inputApellido.value =""
+}
 
+function guardarEnLocalStorage(){
+    // invaco al objeto de js
+    localStorage.setItem('agendaKey',JSON.stringify(agenda))
+}
+
+
+//==============================================================
+//el usuario completa el form y debo crear un objeto contacto
 //declaro variables
 const btnAgregarContacto = document.getElementById('btnAgregarContacto');
 const formularioCrearContacto = document.querySelector('form');
