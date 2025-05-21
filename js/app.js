@@ -14,8 +14,8 @@ function crearContacto() {
 
     //2- crear objeto contacto
     const nuevoContacto = new Contacto(inputNombre.value, inputApellido.value, inputTelefono.value, inputEmail.value, inputImagen.value, inputNotas.value)
-
     console.log(nuevoContacto)
+
     //3- almacenar el objeto en la agenda
     agenda.push(nuevoContacto)
     console.log(agenda)
@@ -33,7 +33,7 @@ function limpiarFormulario(){
 }
 
 function guardarEnLocalStorage(){
-    // invaco al objeto de js
+    // invaco al objeto de js. setItem, puede guarda o actualiza el mismo ID
     localStorage.setItem('agendaKey',JSON.stringify(agenda))
 }
 
@@ -44,8 +44,11 @@ function guardarEnLocalStorage(){
 const btnAgregarContacto = document.getElementById('btnAgregarContacto');
 const formularioCrearContacto = document.querySelector('form');
 
+// trae del localstorage los datos como array de objetos, si esta vacio el local, define como vacio
+const agenda = JSON.parse(localStorage.getItem('agendaKey')) || [];
+console.log(agenda)
+
 // valores el input xa crear contacto
-const agenda = [];
 const inputNombre = document.querySelector('#nombre')
 const inputApellido = document.querySelector('#apellido')
 const inputEmail = document.querySelector('#email')

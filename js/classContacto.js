@@ -19,24 +19,14 @@ export default class Contacto {
     // Getters
 
     get id() {
-
         return this.#id;
-
     }
-
-
 
     get nombre() {
-
         return this.#nombre;
-
     }
 
-
-
     get apellido() {
-
-        
         return this.#apellido;
     }
 
@@ -81,7 +71,7 @@ export default class Contacto {
     set notas(nuevasNotas) {
         this.#notas = nuevasNotas;
     }
-    //metodo para stringify
+    //metodo para stringify para propiedades privadas
     toJSON() {
         return {
             id: this.#id,
