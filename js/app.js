@@ -25,36 +25,44 @@ function crearContacto() {
 
     //5- limpiar formulario
     limpiarFormulario()
-    
+
     //6- dibujar fila en la tabla
-    dibujarFila(nuevoContacto,agenda.length)
+    dibujarFila(nuevoContacto, agenda.length)
 
     //mostrar el mensaje al usuario que se agregó contacto correctamente
+    Swal.fire({
+            title: "Contacto Creado!",
+            text: `El contacto ${nuevoContacto.nombre} ${nuevoContacto.apellido} fue creado correctamente!`,
+            icon: "success"
+        });
 }
 
-function limpiarFormulario(){
+function limpiarFormulario() {
     formularioCrearContacto.reset()
     // inputApellido.value =""
 }
 
-function guardarEnLocalStorage(){
-        console.log('en guardar datos en localstorage')
+function guardarEnLocalStorage() {
+    console.log('en guardar datos en localstorage')
     // invaco al objeto de js. setItem, puede guarda o actualiza el mismo ID
-    localStorage.setItem('agendaKey',JSON.stringify(agenda))
+    localStorage.setItem('agendaKey', JSON.stringify(agenda))
 }
 
-function cargaDatosContacto(){
+function cargaDatosContacto() {
+    //LEER DATOS
     console.log('en cargar datos desde localstorage')
     //1- verificar en localstorage xa mostrar en la tabla
-    if (agenda.length!==0){
+    if (agenda.length !== 0) {
         //2- dibujar cada fila con sus datos
-        agenda.map(((contacto,index) => dibujarFila(contacto,index+1)))
-    }else{
+        agenda.map(((contacto, index) => dibujarFila(contacto, index + 1)))
+
+    } else {
         //mostrar un mensaje que no hay datos para mostrar
     }
+
 }
 
-function dibujarFila(contacto,index){
+function dibujarFila(contacto, index) {
     console.log('en dibujar fila')
     // dibuja una sola fila de la tabla con los datos
     console.log(contacto)
