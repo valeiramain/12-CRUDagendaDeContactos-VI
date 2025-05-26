@@ -25,6 +25,8 @@ function crearContacto() {
 
     //5- limpiar formulario
     limpiarFormulario()
+
+    //mostrar el mensaje al usuario que se agregó contacto correctamente
 }
 
 function limpiarFormulario(){
@@ -43,16 +45,34 @@ function cargaDatosContacto(){
     //1- verificar en localstorage xa mostrar en la tabla
     if (agenda.length!==0){
         //2- dibujar cada fila con sus datos
-        agenda.map(((contacto) => dibujarFila(contacto)))
+        agenda.map(((contacto,index) => dibujarFila(contacto,index+1)))
     }else{
         //mostrar un mensaje que no hay datos para mostrar
     }
 }
 
-function dibujarFila(contacto){
+function dibujarFila(contacto,index){
     console.log('en dibujar fila')
     // dibuja una sola fila de la tabla con los datos
     console.log(contacto)
+    tablaContacto.innerHTML += `<tr>
+                        <th scope="row">${index}</th>
+                        <td>${contacto.nombre}</td>
+                        <td>${contacto.apellido}</td>
+                        <td>${contacto.telefono}</td>
+                        <td>${contacto.email}</td>
+                        <td>${contacto.imagen}</td>
+                        <td>${contacto.notas}</td>
+                        <td class="d-flex flex-nowrap gap-1">
+                            <button class="btn btn-warning">
+                                <i class="bi bi-pen"></i>
+                            </button>
+                            <button class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            <button class="btn btn-info"><i class="bi bi-eye"></i></button>
+                        </td>
+                    </tr>`
 }
 
 //==============================================================
@@ -73,6 +93,9 @@ const inputEmail = document.querySelector('#email')
 const inputTelefono = document.querySelector('#telefono')
 const inputImagen = document.querySelector('#imagen')
 const inputNotas = document.querySelector('#notas')
+
+const tablaContacto = document.getElementById('tablaContactos')
+
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener('click', abrirModalContacto)
