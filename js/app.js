@@ -55,11 +55,9 @@ function cargaDatosContacto() {
     if (agenda.length !== 0) {
         //2- dibujar cada fila con sus datos
         agenda.map(((contacto, index) => dibujarFila(contacto, index + 1)))
-
     } else {
         //mostrar un mensaje que no hay datos para mostrar
     }
-
 }
 
 function dibujarFila(contacto, index) {
@@ -78,7 +76,7 @@ function dibujarFila(contacto, index) {
                             <button class="btn btn-warning">
                                 <i class="bi bi-pen"></i>
                             </button>
-                            <button class="btn btn-danger">
+                            <button class="btn btn-danger" onclick="eliminarContacto()">
                                 <i class="bi bi-trash"></i>
                             </button>
                             <button class="btn btn-info"><i class="bi bi-eye"></i></button>
@@ -86,7 +84,13 @@ function dibujarFila(contacto, index) {
                     </tr>`
 }
 
-//==============================================================
+// type module no permite usar funciones de js en html
+window.eliminarContacto = () => {
+    console.log('aqui debo borrar un contacto')
+
+}
+
+//================= EVENTOS DEL DOM =============================================
 //el usuario completa el form y debo crear un objeto contacto
 //declaro variables
 const btnAgregarContacto = document.getElementById('btnAgregarContacto');
