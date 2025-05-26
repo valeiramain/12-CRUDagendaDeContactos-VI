@@ -25,6 +25,9 @@ function crearContacto() {
 
     //5- limpiar formulario
     limpiarFormulario()
+    
+    //6- dibujar fila en la tabla
+    dibujarFila(nuevoContacto,agenda.length)
 
     //mostrar el mensaje al usuario que se agregó contacto correctamente
 }
