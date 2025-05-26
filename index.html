@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand" href="index.html">Agenda de contacto</a>
+                <a class="navbar-brand" href="index.html">Agenda de contactos</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
                 <i class="bi bi-plus-circle"></i> Agregar
             </button>
         </div>
-        <!-- todo corregir el diseño para que sea responsive -->
+
         <section class="table-responsive">
             <table class="table">
                 <thead>
@@ -52,6 +52,8 @@
                         <th scope="col">Apellido</th>
                         <th scope="col">Tel.</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Imágen</th>
+                        <th scope="col">Notas</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
@@ -62,6 +64,26 @@
                         <td>Otto</td>
                         <td>3812223334</td>
                         <td>otto@mail.com</td>
+                        <td>imagen</td>
+                        <td>notasxxxxxxxxxxxxxxxxxxxxxxx</td>
+                        <td class="d-flex flex-nowrap gap-1">
+                            <button class="btn btn-warning">
+                                <i class="bi bi-pen"></i>
+                            </button>
+                            <button class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                            <button class="btn btn-info"><i class="bi bi-eye"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>MarkMarkMark</td>
+                        <td>OttoOtto</td>
+                        <td>38122233343334</td>
+                        <td>otto3334@mail.com</td>
+                        <td>imagen</td>
+                        <td>notasxxxxxxxxxxxxxxxxxxxxxxx</td>
                         <td class="d-flex flex-nowrap gap-1">
                             <button class="btn btn-warning">
                                 <i class="bi bi-pen"></i>
@@ -75,25 +97,11 @@
                     <tr>
                         <th scope="row">1</th>
                         <td>Mark</td>
-                        <td>Otto</td>
+                        <td>OttoOttoOttoOttoOtto</td>
                         <td>3812223334</td>
                         <td>otto@mail.com</td>
-                        <td class="d-flex flex-nowrap gap-1">
-                            <button class="btn btn-warning">
-                                <i class="bi bi-pen"></i>
-                            </button>
-                            <button class="btn btn-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                            <button class="btn btn-info"><i class="bi bi-eye"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>3812223334</td>
-                        <td>otto@mail.com</td>
+                        <td>imagen</td>
+                        <td>notasxxxxxxxxxxxxxxxxxxxxxxx</td>
                         <td class="d-flex flex-nowrap gap-1">
                             <button class="btn btn-warning">
                                 <i class="bi bi-pen"></i>
@@ -122,15 +130,15 @@
                     <form>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" aria-describedby="label nombre" minlength="2" maxlength="50" />
+                            <input type="text" class="form-control" id="nombre" aria-describedby="label nombre" minlength="2" maxlength="50" placeholder="Juan"/>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="apellido" minlength="2" maxlength="50"/>
+                            <input type="text" class="form-control" id="apellido" minlength="2" maxlength="50" placeholder=Perez/>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email"/>
+                            <input type="email" class="form-control" id="email" placeholder="juanperez@email.com"/>
                         </div>
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Telefono</label>

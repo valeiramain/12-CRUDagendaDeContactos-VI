@@ -33,15 +33,33 @@ function limpiarFormulario(){
 }
 
 function guardarEnLocalStorage(){
+        console.log('en guardar datos en localstorage')
     // invaco al objeto de js. setItem, puede guarda o actualiza el mismo ID
     localStorage.setItem('agendaKey',JSON.stringify(agenda))
 }
 
+function cargaDatosContacto(){
+    console.log('en cargar datos desde localstorage')
+    //1- verificar en localstorage xa mostrar en la tabla
+    if (agenda.length!==0){
+        //2- dibujar cada fila con sus datos
+        agenda.map(((contacto) => dibujarFila(contacto)))
+    }else{
+        //mostrar un mensaje que no hay datos para mostrar
+    }
+}
+
+function dibujarFila(contacto){
+    console.log('en dibujar fila')
+    // dibuja una sola fila de la tabla con los datos
+    console.log(contacto)
+}
 
 //==============================================================
 //el usuario completa el form y debo crear un objeto contacto
 //declaro variables
 const btnAgregarContacto = document.getElementById('btnAgregarContacto');
+//form de la ventana modal xa cargar datos
 const formularioCrearContacto = document.querySelector('form');
 
 // trae del localstorage los datos como array de objetos, si esta vacio el local, define como vacio
@@ -56,12 +74,14 @@ const inputTelefono = document.querySelector('#telefono')
 const inputImagen = document.querySelector('#imagen')
 const inputNotas = document.querySelector('#notas')
 
-
 //manejadores de eventos
 btnAgregarContacto.addEventListener('click', abrirModalContacto)
 
+// CREAR CONTACTO - boton submit modal
 formularioCrearContacto.addEventListener('submit', (e) => {
     e.preventDefault();
     //crear un objeto Contacto
     crearContacto()
 })
+
+cargaDatosContacto()
