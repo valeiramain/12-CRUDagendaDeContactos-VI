@@ -31,10 +31,10 @@ function crearContacto() {
 
     //mostrar el mensaje al usuario que se agregó contacto correctamente
     Swal.fire({
-            title: "Contacto Creado!",
-            text: `El contacto ${nuevoContacto.nombre} ${nuevoContacto.apellido} fue creado correctamente!`,
-            icon: "success"
-        });
+        title: "Contacto Creado!",
+        text: `El contacto ${nuevoContacto.nombre} ${nuevoContacto.apellido} fue creado correctamente!`,
+        icon: "success"
+    });
 }
 
 function limpiarFormulario() {
@@ -63,8 +63,9 @@ function cargaDatosContacto() {
 function dibujarFila(contacto, index) {
     console.log('en dibujar fila')
     // dibuja una sola fila de la tabla con los datos
-    console.log(contacto)
-    tablaContacto.innerHTML += `<tr>
+    console.log(contacto.id)
+    tablaContacto.innerHTML += `
+                    <tr>
                         <th scope="row">${index}</th>
                         <td>${contacto.nombre}</td>
                         <td>${contacto.apellido}</td>
@@ -76,7 +77,7 @@ function dibujarFila(contacto, index) {
                             <button class="btn btn-warning">
                                 <i class="bi bi-pen"></i>
                             </button>
-                            <button class="btn btn-danger" onclick="eliminarContacto()">
+                            <button class="btn btn-danger" onclick="eliminarContacto('${contacto.id}')">
                                 <i class="bi bi-trash"></i>
                             </button>
                             <button class="btn btn-info"><i class="bi bi-eye"></i></button>
@@ -85,8 +86,20 @@ function dibujarFila(contacto, index) {
 }
 
 // type module no permite usar funciones de js en html
-window.eliminarContacto = () => {
-    console.log('aqui debo borrar un contacto')
+window.eliminarContacto = (id) => {
+    //1- obtener ID de contacto a borrar
+    console.log('aqui debo borrar un contacto',id)
+    
+    //2- buscar en la agenda el contacto con ID
+    const posicionContacto = agenda.findIndex((contacto) => contacto.id === id)
+    console.log(posicionContacto)
+    //3- borrar de la agenda
+    agenda.splice(posicionContacto,1)
+
+    //4- actualizar los datos del local storage
+     guardarEnLocalStorage()
+
+    //5- actualizar la tabla de contactos
 
 }
 
