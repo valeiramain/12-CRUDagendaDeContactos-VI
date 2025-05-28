@@ -70,8 +70,6 @@ function dibujarFila(contacto, index) {
                         <td>${contacto.apellido}</td>
                         <td>${contacto.telefono}</td>
                         <td>${contacto.email}</td>
-                        <td>${contacto.imagen}</td>
-                        <td>${contacto.notas}</td>
                         <td class="d-flex flex-nowrap gap-1">
                             <button class="btn btn-warning" onclick="prepararContacto('${contacto.id}')">
                                 <i class="bi bi-pen"></i>
@@ -159,24 +157,19 @@ window.verContacto = (id) => {
 
 // cuando se elimina un elemento, hay que volver a ordenar los numeros de fila
 function reasignarIndices() {
-    // Vacía el cuerpo de la tabla
-    tablaContacto.innerHTML = '';
-
-    // Recorre la agenda y vuelve a dibujar cada fila con el índice correcto!!!!!CORREGIR
-    agenda.forEach((contacto, index) => {
-        //cambiar solo el th, no dibujar la tabla entera
-        dibujarFila(contacto, index + 1); // index + 1 para que el número arranque desde 1
+    const filas = tablaContacto.querySelectorAll("tr");
+    filas.forEach((fila, index) => {
+        fila.querySelector("th").textContent = index + 1;
     });
 }
 
 
 function editarContacto() {
-    console.log('aqui tengo que editar los datos del contacto')
     // tomar los datos de los inputs y se guarda en el array
-    
+
     // buscar el id que estoy editando para actrualizar sus propiedades
-    const posicionContactoActualizar =  agenda.findIndex((contacto)=>contacto.id===idContacto)
-    
+    const posicionContactoActualizar = agenda.findIndex((contacto) => contacto.id === idContacto)
+
     // actualizo el array
     agenda[posicionContactoActualizar].nombre = inputNombre.value;
     agenda[posicionContactoActualizar].apellido = inputApellido.value;
@@ -184,10 +177,9 @@ function editarContacto() {
     agenda[posicionContactoActualizar].email = inputEmail.value;
     agenda[posicionContactoActualizar].notas = inputNotas.value;
     agenda[posicionContactoActualizar].imagen = inputImagen.value;
-    // actualizar localstorage
+
     guardarEnLocalStorage();
-    // mostrar mensaje de datos actualizados
-     //mostrar el mensaje al usuario que se agregó contacto correctamente
+
     Swal.fire({
         title: "Contacto Modificado!",
         text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
