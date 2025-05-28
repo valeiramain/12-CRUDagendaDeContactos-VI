@@ -4,9 +4,12 @@ import Contacto from "./classContacto.js";
 
 // el usuario cliquea el boton agregar invocar a una funcion que muestre el modal
 function abrirModalContacto() {
+    // trae la modal maquetada
     const modalCrearContacto = new bootstrap.Modal(document.getElementById('crearContacto'));
+    limpiarFormulario()
     //mostrar ventana modal, desde js, no con data-bs-target y data-bs-toggle
     modalCrearContacto.show();
+    creandoContacto = true;
 }
 
 function crearContacto() {
@@ -43,14 +46,12 @@ function limpiarFormulario() {
 }
 
 function guardarEnLocalStorage() {
-    console.log('en guardar datos en localstorage')
     // invaco al objeto de js. setItem, puede guarda o actualiza el mismo ID
     localStorage.setItem('agendaKey', JSON.stringify(agenda))
 }
 
 function cargaDatosContacto() {
     //LEER DATOS
-    console.log('en cargar datos desde localstorage')
     //1- verificar en localstorage xa mostrar en la tabla
     if (agenda.length !== 0) {
         //2- dibujar cada fila con sus datos
@@ -83,7 +84,7 @@ function dibujarFila(contacto, index) {
                     </tr>`
 }
 
-// type module no permite usar funciones de js en html
+// type "module" del index.hmtl, no permite usar funciones de js en html, por eso usamos window. para onclick()
 window.eliminarContacto = (id) => {
     //1- obtener ID de contacto a borrar
     Swal.fire({
@@ -91,10 +92,10 @@ window.eliminarContacto = (id) => {
         text: "No se podrá revertir este paso!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#6cc3d5",
+        cancelButtonColor: "#ff7851",
         confirmButtonText: "Borrar",
-        cancelButtonText:"Salir",
+        cancelButtonText: "Salir",
     }).then((result) => {
         console.log(result)
         if (result.isConfirmed) {
@@ -127,39 +128,67 @@ window.eliminarContacto = (id) => {
 }
 
 window.prepararContacto = (id) => {
-    console.log(id)
     // buscar la informacion del usuario para agregar al modal en el array
-    const contactoBuscado = agenda.find((contacto) => contacto.id===id)
-    console.log(contactoBuscado)
-
-    // cargar datos en el formulario
-    inputNombre.value = contactoBuscado.nombre;
-    inputApellido.value = contactoBuscado.apellido;
-    inputEmail.value = contactoBuscado.email;
-    inputTelefono.value = contactoBuscado.telefono;
-    inputImagen.value = contactoBuscado.imagen;
-    inputNotas.value=contactoBuscado.notas;
+    const contactoBuscado = agenda.find((contacto) => contacto.id === id)
 
     // modificar titulo de la ventana modal
     const tituloModal = document.querySelector('.modal-title')
     tituloModal.textContent = 'Modificar Contacto'
     // abre formulario 
     abrirModalContacto()
+    // cargar datos en el formulario
+    inputNombre.value = contactoBuscado.nombre;
+    inputApellido.value = contactoBuscado.apellido;
+    inputEmail.value = contactoBuscado.email;
+    inputTelefono.value = contactoBuscado.telefono;
+    inputImagen.value = contactoBuscado.imagen;
+    inputNotas.value = contactoBuscado.notas;
+    // cambiamos la variable para editar
+    creandoContacto = false;
+    //guardar el ID del contacto a modificar ( se usara en eliminar)
+    idContacto = id
 }
 
 // cuando se elimina un elemento, hay que volver a ordenar los numeros de fila
 function reasignarIndices() {
-    console.log('en dibujar fila')
     // Vacía el cuerpo de la tabla
     tablaContacto.innerHTML = '';
 
-    // Recorre la agenda y vuelve a dibujar cada fila con el índice correcto
+    // Recorre la agenda y vuelve a dibujar cada fila con el índice correcto!!!!!CORREGIR
     agenda.forEach((contacto, index) => {
         //cambiar solo el th, no dibujar la tabla entera
         dibujarFila(contacto, index + 1); // index + 1 para que el número arranque desde 1
     });
 }
 
+
+function editarContacto() {
+    console.log('aqui tengo que editar los datos del contacto')
+    // tomar los datos de los inputs y se guarda en el array
+    
+    // buscar el id que estoy editando para actrualizar sus propiedades
+    const posicionContactoActualizar =  agenda.findIndex((contacto)=>contacto.id===idContacto)
+    
+    // actualizo el array
+    agenda[posicionContactoActualizar].nombre = inputNombre.value;
+    agenda[posicionContactoActualizar].apellido = inputApellido.value;
+    agenda[posicionContactoActualizar].telefono = inputTelefono.value;
+    agenda[posicionContactoActualizar].email = inputEmail.value;
+    agenda[posicionContactoActualizar].notas = inputNotas.value;
+    agenda[posicionContactoActualizar].imagen = inputImagen.value;
+    // actualizar localstorage
+    guardarEnLocalStorage();
+    // mostrar mensaje de datos actualizados
+     //mostrar el mensaje al usuario que se agregó contacto correctamente
+    Swal.fire({
+        title: "Contacto Modificado!",
+        text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
+        icon: "success"
+    });
+    // volver a dibujar la fila
+    // traer la fila de la tabla que coincide con posicionContactoActualizar y modificar los datos
+    // blanquear fromulario
+}
 
 
 //================= EVENTOS DEL DOM =============================================
@@ -183,6 +212,8 @@ const inputNotas = document.querySelector('#notas')
 
 const tablaContacto = document.getElementById('tablaContactos')
 
+let creandoContacto = true;  // true=submit crea  false=para editar
+let idContacto = null; //vacio
 
 //manejadores de eventos
 btnAgregarContacto.addEventListener('click', abrirModalContacto)
@@ -190,8 +221,12 @@ btnAgregarContacto.addEventListener('click', abrirModalContacto)
 // CREAR CONTACTO - boton submit modal
 formularioCrearContacto.addEventListener('submit', (e) => {
     e.preventDefault();
-    //crear un objeto Contacto
-    crearContacto()
+    if (creandoContacto) {
+        //crear un objeto Contacto
+        crearContacto()
+    } else {
+        editarContacto()
+    }
 })
 
 cargaDatosContacto()

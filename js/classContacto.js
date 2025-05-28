@@ -78,7 +78,7 @@ export default class Contacto {
             nombre: this.#nombre,
             apellido: this.#apellido,
             telefono: this.#telefono,
-            email: this.#telefono,
+            email: this.#email,
             imagen: this.#imagen,
             notas: this.notas
         }
