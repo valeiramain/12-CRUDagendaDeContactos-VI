@@ -61,9 +61,7 @@ function cargaDatosContacto() {
 }
 
 function dibujarFila(contacto, index) {
-    console.log('en dibujar fila')
     // dibuja una sola fila de la tabla con los datos
-    console.log(contacto.id)
     tablaContacto.innerHTML += `
                     <tr>
                         <th scope="row">${index}</th>
@@ -74,7 +72,7 @@ function dibujarFila(contacto, index) {
                         <td>${contacto.imagen}</td>
                         <td>${contacto.notas}</td>
                         <td class="d-flex flex-nowrap gap-1">
-                            <button class="btn btn-warning">
+                            <button class="btn btn-warning" onclick="prepararContacto('${contacto.id}')">
                                 <i class="bi bi-pen"></i>
                             </button>
                             <button class="btn btn-danger" onclick="eliminarContacto('${contacto.id}')">
@@ -126,6 +124,27 @@ window.eliminarContacto = (id) => {
     });
 
 
+}
+
+window.prepararContacto = (id) => {
+    console.log(id)
+    // buscar la informacion del usuario para agregar al modal en el array
+    const contactoBuscado = agenda.find((contacto) => contacto.id===id)
+    console.log(contactoBuscado)
+
+    // cargar datos en el formulario
+    inputNombre.value = contactoBuscado.nombre;
+    inputApellido.value = contactoBuscado.apellido;
+    inputEmail.value = contactoBuscado.email;
+    inputTelefono.value = contactoBuscado.telefono;
+    inputImagen.value = contactoBuscado.imagen;
+    inputNotas.value=contactoBuscado.notas;
+
+    // modificar titulo de la ventana modal
+    const tituloModal = document.querySelector('.modal-title')
+    tituloModal.textContent = 'Modificar Contacto'
+    // abre formulario 
+    abrirModalContacto()
 }
 
 // cuando se elimina un elemento, hay que volver a ordenar los numeros de fila
