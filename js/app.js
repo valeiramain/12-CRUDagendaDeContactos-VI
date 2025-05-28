@@ -88,20 +88,60 @@ function dibujarFila(contacto, index) {
 // type module no permite usar funciones de js en html
 window.eliminarContacto = (id) => {
     //1- obtener ID de contacto a borrar
-    console.log('aqui debo borrar un contacto',id)
-    
-    //2- buscar en la agenda el contacto con ID
-    const posicionContacto = agenda.findIndex((contacto) => contacto.id === id)
-    console.log(posicionContacto)
-    //3- borrar de la agenda
-    agenda.splice(posicionContacto,1)
+    Swal.fire({
+        title: "Estas por eliminar un contacto",
+        text: "No se podrá revertir este paso!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Borrar",
+        cancelButtonText:"Salir",
+    }).then((result) => {
+        console.log(result)
+        if (result.isConfirmed) {
+            // aqui agrego codigo si quiero borrar
+            //2- buscar en la agenda el contacto con ID
+            const posicionContacto = agenda.findIndex((contacto) => contacto.id === id)
+            console.log(posicionContacto)
+            //3- borrar de la agenda
+            agenda.splice(posicionContacto, 1)
 
-    //4- actualizar los datos del local storage
-     guardarEnLocalStorage()
+            //4- actualizar los datos del local storage
+            guardarEnLocalStorage()
 
-    //5- actualizar la tabla de contactos
+            //5- actualizar la tabla de contactos. ingreso al tr del tbody para borrarlo de la tabla
+            tablaContacto.removeChild(tablaContacto.children[posicionContacto])
+
+            //6- corrige el numero de filas de la tabla
+            reasignarIndices();
+
+            //7- cartel de contacto eliminado
+            Swal.fire({
+                title: "Contacto Borrado!",
+                text: "Su contacto ha sido borrado exitosamente.",
+                icon: "success"
+            });
+        }
+    });
+
 
 }
+
+// cuando se elimina un elemento, hay que volver a ordenar los numeros de fila
+function reasignarIndices() {
+    console.log('en dibujar fila')
+    // Vacía el cuerpo de la tabla
+    tablaContacto.innerHTML = '';
+
+    // Recorre la agenda y vuelve a dibujar cada fila con el índice correcto
+    agenda.forEach((contacto, index) => {
+        //cambiar solo el th, no dibujar la tabla entera
+        dibujarFila(contacto, index + 1); // index + 1 para que el número arranque desde 1
+    });
+}
+
+
 
 //================= EVENTOS DEL DOM =============================================
 //el usuario completa el form y debo crear un objeto contacto
