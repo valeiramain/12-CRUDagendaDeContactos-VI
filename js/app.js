@@ -79,12 +79,13 @@ function dibujarFila(contacto, index) {
                             <button class="btn btn-danger" onclick="eliminarContacto('${contacto.id}')">
                                 <i class="bi bi-trash"></i>
                             </button>
-                            <button class="btn btn-info"><i class="bi bi-eye"></i></button>
+                            <button class="btn btn-info" onclick="verContacto('${contacto.id}')"><i class="bi bi-eye"></i></button>
                         </td>
                     </tr>`
 }
 
 // type "module" del index.hmtl, no permite usar funciones de js en html, por eso usamos window. para onclick()
+// WINDOW representa a la ventana del navegador
 window.eliminarContacto = (id) => {
     //1- obtener ID de contacto a borrar
     Swal.fire({
@@ -148,6 +149,13 @@ window.prepararContacto = (id) => {
     //guardar el ID del contacto a modificar ( se usara en eliminar)
     idContacto = id
 }
+
+window.verContacto = (id) => {
+    console.log(id)
+    console.log(window.location)
+    window.location.href = `./pages/detalleContacto.html?id=${id}`
+}
+
 
 // cuando se elimina un elemento, hay que volver a ordenar los numeros de fila
 function reasignarIndices() {
