@@ -98,7 +98,6 @@ window.eliminarContacto = (id) => {
     }).then((result) => {
         console.log(result)
         if (result.isConfirmed) {
-            // aqui agrego codigo si quiero borrar
             //2- buscar en la agenda el contacto con ID
             const posicionContacto = agenda.findIndex((contacto) => contacto.id === id)
             console.log(posicionContacto)
@@ -127,7 +126,7 @@ window.eliminarContacto = (id) => {
 }
 
 window.prepararContacto = (id) => {
-    // buscar la informacion del usuario para agregar al modal en el array
+    // buscar la informacion del usuario en el array para agregar al modal
     const contactoBuscado = agenda.find((contacto) => contacto.id === id)
 
     // modificar titulo de la ventana modal
@@ -185,10 +184,29 @@ function editarContacto() {
         text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
         icon: "success"
     });
-    // volver a dibujar la fila
-    // traer la fila de la tabla que coincide con posicionContactoActualizar y modificar los datos
-    // blanquear fromulario
+    
+    // traer la fila de la tabla que coincide con posicionContactoActualizar y volver a dibujar la fila de la tabla que sale por pantalla
+    console.log(fila)
+    fila.innerHTML = `
+    <th scope="row">${posicionContactoActualizar + 1}</th>
+    <td>${agenda[posicionContactoActualizar].nombre}</td>
+    <td>${agenda[posicionContactoActualizar].apellido}</td>
+    <td>${agenda[posicionContactoActualizar].telefono}</td>
+    <td>${agenda[posicionContactoActualizar].email}</td>
+    <td class="d-flex flex-nowrap gap-1">
+        <button class="btn btn-warning" onclick="prepararContacto('${agenda[posicionContactoActualizar].id}')">
+            <i class="bi bi-pen"></i>
+        </button>
+        <button class="btn btn-danger" onclick="eliminarContacto('${agenda[posicionContactoActualizar].id}')">
+            <i class="bi bi-trash"></i>
+        </button>
+        <button class="btn btn-info" onclick="verContacto('${agenda[posicionContactoActualizar].id}')"><i class="bi bi-eye"></i></button>
+    </td>`;
+
+    // blanquear formulario
+    limpiarFormulario()
 }
+
 
 
 //================= EVENTOS DEL DOM =============================================
