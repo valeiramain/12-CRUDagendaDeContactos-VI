@@ -121,8 +121,6 @@ window.eliminarContacto = (id) => {
             });
         }
     });
-
-
 }
 
 window.prepararContacto = (id) => {
@@ -184,9 +182,10 @@ function editarContacto() {
         text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
         icon: "success"
     });
-    
-    // traer la fila de la tabla que coincide con posicionContactoActualizar y volver a dibujar la fila de la tabla que sale por pantalla
-    console.log(fila)
+
+    // ACTUALIZAR TABLA: traer la fila de la tabla que coincide con posicionContactoActualizar y volver a dibujar la fila de la tabla que sale por pantalla
+    const fila = tablaContacto.children[posicionContactoActualizar];
+
     fila.innerHTML = `
     <th scope="row">${posicionContactoActualizar + 1}</th>
     <td>${agenda[posicionContactoActualizar].nombre}</td>
