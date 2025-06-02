@@ -148,7 +148,10 @@ window.prepararContacto = (id) => {
 window.verContacto = (id) => {
     console.log(id)
     console.log(window.location)
+    // propiedad que me lleva a otra pagina
     window.location.href = `./pages/detalleContacto.html?id=${id}`
+
+    
 }
 
 
