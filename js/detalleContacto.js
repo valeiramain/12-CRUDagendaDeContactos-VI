@@ -13,20 +13,27 @@ console.log(agenda)
 
 //3- buscar en la agenda, los datos del contacto que tiene el id recibido en la URL
 const contactoBuscado = agenda.find((contacto) => (contacto.id === id))
-console.log(contactoBuscado)
+console.log(contactoBuscado.imagen)
 
-//4- dibujar el objeto en mi maquetado
+let imagenContacto = "";
+let imagenAlt = "";
+if (contactoBuscado.imagen!==null){
+    console.log('hay imagen')
+    imagenContacto = contactoBuscado.imagen;
+    imagenAlt = contactoBuscado.nombre+" "+contactoBuscado.apellido
+}else{
+    console.log('no hay imagen')
+    imagenContacto = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
+    imagenAlt = "Contacto sin imágen"
+}
 
 
-
-//-------- DOM -----------------
 const cardContacto = document.querySelector('.card')
 console.log(cardContacto)
 
 cardContacto.innerHTML = `<div class="row g-0">
                     <div class="col-md-4">
-                        <img src="${contactoBuscado.imagen}" class="img-fluid rounded-start" alt="${contactoBuscado.nombre}">
-                        // agregar if si no hay imagen para mostrar
+                        <img src="${imagenContacto}" class="img-fluid rounded-start" alt="${imagenAlt}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
