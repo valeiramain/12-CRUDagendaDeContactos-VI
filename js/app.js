@@ -16,11 +16,9 @@ function crearContacto() {
 
         //2- crear objeto contacto
         const nuevoContacto = new Contacto(inputNombre.value, inputApellido.value, inputTelefono.value, inputEmail.value, inputImagen.value, inputNotas.value)
-        console.log(nuevoContacto)
 
         //3- almacenar el objeto en la agenda
         agenda.push(nuevoContacto)
-        console.log(agenda)
 
         //4-guardar en local storage
         guardarEnLocalStorage()
@@ -99,11 +97,10 @@ window.eliminarContacto = (id) => {
         confirmButtonText: "Borrar",
         cancelButtonText: "Salir",
     }).then((result) => {
-        console.log(result)
         if (result.isConfirmed) {
             //2- buscar en la agenda el contacto con ID
             const posicionContacto = agenda.findIndex((contacto) => contacto.id === id)
-            console.log(posicionContacto)
+
             //3- borrar de la agenda
             agenda.splice(posicionContacto, 1)
 
@@ -149,8 +146,6 @@ window.prepararContacto = (id) => {
 }
 
 window.verContacto = (id) => {
-    console.log(id)
-    console.log(window.location)
     // propiedad que me lleva a otra pagina
     window.location.href = `./pages/detalleContacto.html?id=${id}`
 
@@ -169,36 +164,32 @@ function reasignarIndices() {
 
 function editarContacto() {
     // verificar que los datos son validos
+    if (validaciones()) {
+        // buscar en el array, el id que estoy editando para actualizar sus propiedades
+        const posicionContactoActualizar = agenda.findIndex((contacto) => contacto.id === idContacto)
 
-    if (validaciones()){
-    // tomar los datos de los inputs y se guarda en el array
+        // actualizo el array
+        agenda[posicionContactoActualizar].nombre = inputNombre.value;
+        agenda[posicionContactoActualizar].apellido = inputApellido.value;
+        agenda[posicionContactoActualizar].telefono = inputTelefono.value;
+        agenda[posicionContactoActualizar].email = inputEmail.value;
+        agenda[posicionContactoActualizar].notas = inputNotas.value;
+        agenda[posicionContactoActualizar].imagen = inputImagen.value;
 
-    // buscar el id que estoy editando para actrualizar sus propiedades
-    const posicionContactoActualizar = agenda.findIndex((contacto) => contacto.id === idContacto)
+        guardarEnLocalStorage();
+        // blanquear formulario
+        limpiarFormulario()
 
-    // actualizo el array
-    agenda[posicionContactoActualizar].nombre = inputNombre.value;
-    agenda[posicionContactoActualizar].apellido = inputApellido.value;
-    agenda[posicionContactoActualizar].telefono = inputTelefono.value;
-    agenda[posicionContactoActualizar].email = inputEmail.value;
-    agenda[posicionContactoActualizar].notas = inputNotas.value;
-    agenda[posicionContactoActualizar].imagen = inputImagen.value;
+        Swal.fire({
+            title: "Contacto Modificado!",
+            text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
+            icon: "success"
+        });
 
-    guardarEnLocalStorage();
-    // blanquear formulario
-    limpiarFormulario()
+        // ACTUALIZAR TABLA: traer la fila de la tabla que coincide con posicionContactoActualizar y volver a dibujar la fila de la tabla que sale por pantalla
+        const fila = tablaContacto.children[posicionContactoActualizar];
 
-
-    Swal.fire({
-        title: "Contacto Modificado!",
-        text: `El contacto ${agenda[posicionContactoActualizar].nombre} fue modificado correctamente!`,
-        icon: "success"
-    });
-
-    // ACTUALIZAR TABLA: traer la fila de la tabla que coincide con posicionContactoActualizar y volver a dibujar la fila de la tabla que sale por pantalla
-    const fila = tablaContacto.children[posicionContactoActualizar];
-
-    fila.innerHTML = `
+        fila.innerHTML = `
     <th scope="row">${posicionContactoActualizar + 1}</th>
     <td>${agenda[posicionContactoActualizar].nombre}</td>
     <td>${agenda[posicionContactoActualizar].apellido}</td>
@@ -214,9 +205,8 @@ function editarContacto() {
         <button class="btn btn-info" onclick="verContacto('${agenda[posicionContactoActualizar].id}')"><i class="bi bi-eye"></i></button>
     </td>`;
 
-    
-    // cerrar modal
-    modalCrearContacto.hide()
+        // cerrar modal
+        modalCrearContacto.hide()
     }
 }
 
@@ -235,7 +225,6 @@ function validarCantidadCaracteres(input, min, max) {
 }
 
 function validarEmail() {
-
     const regExp = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
     if (regExp.test(inputEmail.value)) {
         inputEmail.classList.add("is-valid");
@@ -247,9 +236,37 @@ function validarEmail() {
         return false;
     }
 }
-// validar URL de imagen
 
 // validar telefono
+function validarTelefono() {
+    const regExp = /^\(?\d{2,4}\)?[-.\s]?\d{6,8}$/
+
+    if (regExp.test(inputTelefono.value)) {
+        inputTelefono.classList.add("is-valid");
+        inputTelefono.classList.remove("is-invalid");
+        return true;
+    } else {
+        inputTelefono.classList.add("is-invalid");
+        inputTelefono.classList.remove("is-valid");
+        return false;
+    }
+}
+
+
+// validar URL de imagen
+function validarImagen() {
+    const regExp = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/
+    if (regExp.test(inputImagen.value)) {
+        inputImagen.classList.add("is-valid");
+        inputImagen.classList.remove("is-invalid");
+        return true;
+    } else {
+        inputImagen.classList.add("is-invalid");
+        inputImagen.classList.remove("is-valid");
+        return false;
+    }
+}
+
 
 function validaciones() {
     let datosValidos = true; // se cumplieron las validaciones
@@ -265,6 +282,13 @@ function validaciones() {
     }
 
     if (!validarEmail()) {
+        datosValidos = false;
+    }
+    if (!validarTelefono()) {
+        datosValidos = false;
+    }
+
+    if (!validarImagen()) {
         datosValidos = false;
     }
 
@@ -283,7 +307,6 @@ const modalCrearContacto = new bootstrap.Modal(document.getElementById('crearCon
 
 // trae del localstorage los datos como array de objetos, si esta vacio el local, define como vacio
 const agenda = JSON.parse(localStorage.getItem('agendaKey')) || [];
-console.log(agenda)
 
 // valores el input xa crear contacto
 const inputNombre = document.querySelector('#nombre')
@@ -301,13 +324,14 @@ let idContacto = null; //vacio
 //manejadores de eventos
 btnAgregarContacto.addEventListener('click', abrirModalContacto)
 
-// CREAR CONTACTO - boton submit modal
+// CREAR o MODIFICAR CONTACTO - boton submit modal
 formularioCrearContacto.addEventListener('submit', (e) => {
     e.preventDefault();
     if (creandoContacto) {
         //crear un objeto Contacto
         crearContacto()
     } else {
+        // modificar el contacto
         editarContacto()
     }
 })
