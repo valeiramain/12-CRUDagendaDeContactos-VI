@@ -17,19 +17,15 @@ console.log(contactoBuscado.imagen)
 
 let imagenContacto = "";
 let imagenAlt = "";
-if (contactoBuscado.imagen!==null){
-    console.log('hay imagen')
+if (contactoBuscado.imagen !== null) {
     imagenContacto = contactoBuscado.imagen;
-    imagenAlt = contactoBuscado.nombre+" "+contactoBuscado.apellido
-}else{
-    console.log('no hay imagen')
+    imagenAlt = contactoBuscado.nombre + " " + contactoBuscado.apellido
+} else {
     imagenContacto = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
     imagenAlt = "Contacto sin imágen"
 }
 
-
 const cardContacto = document.querySelector('.card')
-console.log(cardContacto)
 
 cardContacto.innerHTML = `<div class="row g-0">
                     <div class="col-md-4">
