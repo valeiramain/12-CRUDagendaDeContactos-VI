@@ -4,10 +4,8 @@ import Contacto from "./classContacto.js";
 
 // el usuario cliquea el boton agregar invocar a una funcion que muestre el modal
 function abrirModalContacto() {
-    // trae la modal maquetada
-    const modalCrearContacto = new bootstrap.Modal(document.getElementById('crearContacto'));
     limpiarFormulario()
-    //mostrar ventana modal, desde js, no con data-bs-target y data-bs-toggle
+    //abrir ventana modal, desde js, no con data-bs-target y data-bs-toggle
     modalCrearContacto.show();
     creandoContacto = true;
 }
@@ -170,6 +168,9 @@ function reasignarIndices() {
 
 
 function editarContacto() {
+    // verificar que los datos son validos
+
+    if (validaciones()){
     // tomar los datos de los inputs y se guarda en el array
 
     // buscar el id que estoy editando para actrualizar sus propiedades
@@ -184,6 +185,9 @@ function editarContacto() {
     agenda[posicionContactoActualizar].imagen = inputImagen.value;
 
     guardarEnLocalStorage();
+    // blanquear formulario
+    limpiarFormulario()
+
 
     Swal.fire({
         title: "Contacto Modificado!",
@@ -210,8 +214,10 @@ function editarContacto() {
         <button class="btn btn-info" onclick="verContacto('${agenda[posicionContactoActualizar].id}')"><i class="bi bi-eye"></i></button>
     </td>`;
 
-    // blanquear formulario
-    limpiarFormulario()
+    
+    // cerrar modal
+    modalCrearContacto.hide()
+    }
 }
 
 
@@ -241,9 +247,10 @@ function validarEmail() {
         return false;
     }
 }
-// validar imagen
+// validar URL de imagen
 
 // validar telefono
+
 function validaciones() {
     let datosValidos = true; // se cumplieron las validaciones
 
@@ -271,6 +278,8 @@ function validaciones() {
 const btnAgregarContacto = document.getElementById('btnAgregarContacto');
 //form de la ventana modal xa cargar datos
 const formularioCrearContacto = document.querySelector('form');
+
+const modalCrearContacto = new bootstrap.Modal(document.getElementById('crearContacto'));
 
 // trae del localstorage los datos como array de objetos, si esta vacio el local, define como vacio
 const agenda = JSON.parse(localStorage.getItem('agendaKey')) || [];
