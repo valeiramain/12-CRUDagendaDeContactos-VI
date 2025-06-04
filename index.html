@@ -76,34 +76,49 @@
                     <form>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" aria-describedby="label nombre"
-                                minlength="2" maxlength="50" placeholder="Juan" />
+                            <input type="text" class="form-control" id="nombre"
+                                aria-describedby="label nombre" minlength="2" maxlength="50" placeholder="Juan" />
+                            <div class="invalid-feedback">
+                                El nombre debe tener entre 2 y 50 caracteres
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido</label>
                             <input type="text" class="form-control" id="apellido" minlength="2" maxlength="50"
                                 placeholder=Perez />
+                            <div class="invalid-feedback">
+                                El apellido debe tener entre 2 y 50 caracteres
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" placeholder="juanperez@email.com" />
+                            <div class="invalid-feedback">
+                                El Email debe tener formato adecuado texto@mail.dominio
+                            </div>
                         </div>
-                        <!-- \+? el número puede empezar con un + o no -->
-                        <!-- después del + (opcional), deben venir entre 8 y 15 caracteres, compuestos solo de números, espacios o guiones. -->
-                        <!-- $ Significa fin de la cadena. -->
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Telefono</label>
                             <input type="tel" class="form-control" id="telefono" minlength="8" maxlength="15"
                                 placeholder="ej: +5493815969798" />
+                            <div class="invalid-feedback">
+                                El formato del telefono debe ser codigo de area y telefono
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="imagen" class="form-label">Imágen</label>
                             <input type="text" class="form-control" id="imagen" placeholder="http://imagen.jpg" />
+                            <div class="invalid-feedback">
+                                Se debe ingresar link de una imagen válida, que termine (.jpg, png, jpeg, webp)
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="notas" class="form-label">Notas</label>
                             <textarea class="form-control" id="notas" maxlength="250"
                                 placeholder="agrega tus notas aqui"></textarea>
+                            <div class="invalid-feedback">
+                                Las notas deben tener entre 2 y 250 caracteres
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
@@ -119,9 +134,8 @@
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
 
-    <script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
-"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js"></script>
+    
     <!-- para usar import tiene q ser tipo module -->
     <script src="./js/app.js" type="module"></script>
 </body>
